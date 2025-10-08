@@ -6,9 +6,21 @@
   <title>DI Garden</title>
   <style>
     html, body { height: 100%; margin: 0; }
-    body { background:#111; display:grid; place-items:center; }
-    .frame { width:100vw; height:100vh; overflow:hidden; }
-    .frame img { width:100%; height:100%; object-fit:contain; display:block; }
+    body { background:#111; }
+
+    /* full-viewport “hero” */
+    .hero {
+      width: 100vw;
+      height: 100vh;
+      background: center / contain no-repeat url('digardenfrontpage.png'); /* desktop/wide default */
+    }
+
+    /* phones / narrow screens → use the vertical asset */
+    @media (max-width: 768px) {
+      .hero {
+        background-image: url('digarden-vertical.png');
+      }
+    }
 
     /* optional call button */
     .call {
@@ -19,17 +31,7 @@
   </style>
 </head>
 <body>
-  <div class="frame">
-    <picture>
-      <!-- phones / narrow screens → vertical image -->
-      <source media="(max-width: 768px)" srcset="digarden-vertical.png" />
-      <!-- wider screens → original landscape image -->
-      <source media="(min-width: 769px)" srcset="digardenfrontpage.png" />
-      <!-- fallback -->
-      <img src="digardenfrontpage.png" alt="DI Garden — очаквайте скоро" />
-    </picture>
-  </div>
-
+  <div class="hero"></div>
   <a class="call" href="tel:+359879880061">Обади се: 0879 880 061</a>
 </body>
 </html>
