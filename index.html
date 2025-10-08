@@ -1,24 +1,47 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DI Garden</title>
   <style>
-    body {
+    html, body {
+      height: 100%;
       margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: #f8f8f8;
     }
-    img {
-      max-width: 100%;
-      height: auto;
+    body {
+      background: #111;            
+      display: grid;
+      place-items: center;
+    }
+    
+    .viewport {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .viewport img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;           
+      object-position: center;
+      display: block;
     }
   </style>
 </head>
 <body>
-  <img src="digardenfrontpage.png" alt="digardenfrontpage">
+  <div class="viewport">
+    <img
+      src="digardenfrontpage.png"
+      srcset="digardenfrontpage-800.png 800w,
+              digardenfrontpage-1200.png 1200w,
+              digardenfrontpage-1920.png 1920w,
+              digardenfrontpage.png 2560w"
+      sizes="100vw"
+      alt="DI Garden — очаквайте скоро"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
 </body>
 </html>
