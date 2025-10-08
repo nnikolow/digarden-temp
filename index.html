@@ -5,50 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DI Garden</title>
 
-  <!-- Preload both images so switching is instant -->
+  <!-- Preload both so switching is instant -->
   <link rel="preload" as="image" href="digardenfrontpage.png">
   <link rel="preload" as="image" href="digarden-vertical.png">
 
   <style>
-    html, body { height: 100%; margin: 0; background:#111; }
-    .frame { position: relative; width:100vw; height:100vh; overflow:hidden; }
+    /* reset */
+    html, body { margin: 0; height: 100%; }
 
-    /* both images take full viewport but are hidden by default */
-    .art {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: contain;   /* use 'cover' if you prefer edge-to-edge with slight crop */
-      display: none;
+    /* full-viewport hero */
+    .hero {
+      width: 100vw;
+      min-height: 100dvh;          /* fills full device viewport on mobile */
+      background-color: #111;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;      /* <- fills the page, may crop a little */
+      background-image: url("digardenfrontpage.png"); /* desktop/wide default */
     }
 
-    /* show portrait on phones / narrow screens */
+    /* phones / narrow screens -> vertical poster */
     @media (max-width: 768px) {
-      .art.mobile { display: block; }
-    }
-    /* show landscape on wider screens */
-    @media (min-width: 769px) {
-      .art.desktop { display: block; }
+      .hero { background-image: url("digarden-vertical.png"); }
     }
 
-    /* optional: call button */
+    /* optional call button */
     .call {
-      position: fixed; left:50%; bottom:20px; transform:translateX(-50%);
-      background:#21c55d; color:#111; font-weight:700; border:none; padding:12px 18px;
-      border-radius:12px; text-decoration:none; box-shadow:0 6px 24px rgba(0,0,0,.3);
+      position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%);
+      background: #21c55d; color: #111; font-weight: 700; border: 0;
+      padding: 12px 18px; border-radius: 12px; text-decoration: none;
+      box-shadow: 0 6px 24px rgba(0,0,0,.3);
     }
   </style>
 </head>
 <body>
-  <div class="frame">
-    <img class="art mobile"   src="digarden-vertical.png"    alt="DI Garden — мобилна визия" decoding="async">
-    <img class="art desktop"  src="digardenfrontpage.png"    alt="DI Garden — десктоп визия" decoding="async">
-  </div>
-
+  <div class="hero"></div>
   <a class="call" href="tel:+359879880061">Обади се: 0879 880 061</a>
-
-  <!-- Fallback for users with CSS disabled -->
-  <noscript>
-    <img src="digardenfrontpage.png" alt="DI Garden" style="width:100%;height:auto;display:block;">
-  </noscript>
 </body>
 </html>
