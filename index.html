@@ -6,23 +6,14 @@
   <title>DI Garden</title>
   <style>
     html, body { height: 100%; margin: 0; }
-    body { background:#111; }
-
-    /* full-viewport “hero” */
-    .hero {
-      width: 100vw;
-      height: 100vh;
-      background: center / contain no-repeat url('digardenfrontpage.png'); /* desktop/wide default */
+    body { background:#111; display:grid; place-items:center; }
+    .frame { width:100vw; height:100vh; overflow:hidden; }
+    #hero {
+      width:100%;
+      height:100%;
+      object-fit: contain; /* change to 'cover' if you prefer edge-to-edge with slight crop */
+      display:block;
     }
-
-    /* phones / narrow screens → use the vertical asset */
-    @media (max-width: 768px) {
-      .hero {
-        background-image: url('digarden-vertical.png');
-      }
-    }
-
-    /* optional call button */
     .call {
       position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
       background:#21c55d; color:#111; font-weight:700; border:none; padding:12px 18px;
@@ -31,7 +22,32 @@
   </style>
 </head>
 <body>
-  <div class="hero"></div>
+  <div class="frame">
+    <img id="hero" alt="DI Garden — очаквайте скоро" />
+  </div>
+
   <a class="call" href="tel:+359879880061">Обади се: 0879 880 061</a>
+
+  <script>
+    (function () {
+      const DESKTOP_SRC = "digardenfrontpage.png";   // landscape (wide)
+      const MOBILE_SRC  = "digarden-vertical.png";   // portrait (mobile)
+      const BREAKPOINT  = 768;                       // px
+
+      const img = document.getElementById("hero");
+
+      function pick() {
+        const useMobile = window.innerWidth <= BREAKPOINT;
+        const next = useMobile ? MOBILE_SRC : DESKTOP_SRC;
+        // Only swap if needed to avoid flicker
+        if (!img.src.endsWith(next)) img.src = next;
+      }
+
+      // Initial set + react to resizes / orientation changes
+      pick();
+      window.addEventListener("resize", pick, { passive: true });
+      window.addEventListener("orientationchange", pick, { passive: true });
+    })();
+  </script>
 </body>
 </html>
