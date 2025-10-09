@@ -5,41 +5,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>DI Garden</title>
 
-  <!-- Preload both so switching is instant -->
-  <link rel="preload" as="image" href="digardenfrontpage.png">
-  <link rel="preload" as="image" href="digarden-vertical.png">
+  <!-- Preload the background for faster first paint -->
+  <link rel="preload" as="image" href="background.png" />
 
   <style>
-    /* reset */
-    html, body { margin: 0; height: 100%; }
-
-    /* full-viewport hero */
-    .hero {
-      width: 100vw;
-      min-height: 100dvh;          /* fills full device viewport on mobile */
-      background-color: #111;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;      /* <- fills the page, may crop a little */
-      background-image: url("digardenfrontpage.png"); /* desktop/wide default */
+    :root{
+      --bg-dark:#0f0f0f;
+      --accent:#22c55e;
+      --text:#f4f4f5;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --pad:clamp(16px,2.5vw,32px);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{
+      background: var(--bg-dark);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
     }
 
-    /* phones / narrow screens -> vertical poster */
-    @media (max-width: 768px) {
-      .hero { background-image: url("digarden-vertical.png"); }
+    /* Full-screen hero with single background image */
+    .hero{
+      position:relative;
+      min-height:100dvh;           /* full device viewport on mobile */
+      width:100%;
+      background: center / cover no-repeat url("background.png");
+      display:grid;
+      place-items:center;
+      padding:var(--pad);
+      isolation:isolate;
+    }
+    /* subtle overlay for readability */
+    .hero::before{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.55));
+      z-index:0;
     }
 
-    /* optional call button */
-    .call {
-      position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%);
-      background: #21c55d; color: #111; font-weight: 700; border: 0;
-      padding: 12px 18px; border-radius: 12px; text-decoration: none;
-      box-shadow: 0 6px 24px rgba(0,0,0,.3);
+    .card{
+      z-index:1;
+      width:min(92vw, 900px);
+      backdrop-filter: blur(6px);
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:20px;
+      padding:clamp(20px,3.5vw,40px);
+      text-align:center;
+      box-shadow:var(--shadow);
     }
+    .title{
+      margin:0 0 .4em 0;
+      line-height:1.05;
+      font-weight:900;
+      font-size:clamp(28px,6vw,64px);
+      text-shadow:0 2px 0 rgba(0,0,0,.25);
+      letter-spacing:.02em;
+    }
+    .info{
+      margin:0 auto 1.2em;
+      line-height:1.35;
+      font-weight:700;
+      font-size:clamp(16px,3.5vw,26px);
+      opacity:.95;
+    }
+    .actions{
+      margin-top:clamp(12px,2vw,20px);
+      display:flex; gap:12px; flex-wrap:wrap; justify-content:center;
+    }
+    .btn{
+      display:inline-block; text-decoration:none;
+      background:var(--accent); color:#0b0f0c; font-weight:800;
+      padding:12px 18px; border-radius:14px; box-shadow:var(--shadow);
+      transition:transform .15s ease, filter .15s ease;
+    }
+    .btn:hover{transform:translateY(-1px);filter:brightness(1.04)}
+    .btn:active{transform:translateY(0);filter:brightness(.98)}
+    .ghost{ background:rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.2); }
+
+    .fine{ margin-top:.6rem; font-size:clamp(12px,2.5vw,14px); opacity:.85; }
   </style>
 </head>
 <body>
-  <div class="hero"></div>
-  <a class="call" href="tel:+359879880061">Обади се: 0879 880 061</a>
+  <main class="hero">
+    <section class="card">
+      <h1 class="title">ОЧАКВАЙТЕ СКОРО<br>НАШИЯ САЙТ!</h1>
+
+      <p class="info">
+        Намерете ни на <strong>ул. Тролейна 9, Варна</strong><br>
+        Работно време: <strong>всеки ден 10:00 – 20:00</strong>
+      </p>
+
+      <div class="actions">
+        <a class="btn" href="tel:+359879880061">Обади се: 0879 880 061</a>
+        <a class="btn ghost" target="_blank"
+           href="https://www.google.com/maps/place/Di+Garden+-+%D0%BF%D0%BB%D0%BE%D0%B4%D0%BE%D0%B2%D0%B5+%D0%B8+%D0%B7%D0%B5%D0%BB%D0%B5%D0%BD%D1%87%D1%83%D1%86%D0%B8/@43.228119,27.8876785,17z/data=!4m15!1m8!3m7!1s0x40a4548dc5ec6627:0x4a2d97a4cbdbb70d!2z0LYu0LouINCc0LvQsNC00L7RgdGCIElJ0JzQu9Cw0LTQvtGB0YIsINGD0LsuIOKAntCi0YDQvtC70LXQudC90LDigJwgOSwgOTAyMCDQktCw0YDQvdCw!3b1!8m2!3d43.228119!4d27.8902534!16s%2Fg%2F11hks_4109!3m5!1s0x40a455007c65df5d:0x8a73fe4b07efb473!8m2!3d43.228218!4d27.8916371!16s%2Fg%2F11y01ynlym?entry=ttu&g_ep=EgoyMDI1MTAwNi4wIKXMDSoASAFQAw%3D%3D">Навигация в Google Maps</a>
+      </div>
+
+      <div class="fine">© DI Garden</div>
+    </section>
+  </main>
 </body>
 </html>
